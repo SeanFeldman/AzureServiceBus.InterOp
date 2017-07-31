@@ -54,7 +54,10 @@ namespace NewClientNativeReceiver
 
             var reply = new Message1Reply {Text = "Reply from wire-compat/asb-standard"};
             var replyAsString = JsonConvert.SerializeObject(reply);
+
+            // BOOM! The new client only sends byte[]. The old client will not be able to receive it properly and will throw UnsupportedBrokeredMessageBodyTypeException.
             var message = new Message(Encoding.UTF8.GetBytes(replyAsString));
+
             message.UserProperties["NServiceBus.EnclosedMessageTypes"] = "Shared.Message1Reply";
             message.UserProperties["NServiceBus.Transport.Encoding"] = transportEncoding;
 
