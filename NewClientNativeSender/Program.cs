@@ -31,7 +31,7 @@ namespace NewClientNativeReceiver
                     Console.WriteLine(msg.Property);
                     await queueClient.CompleteAsync(message.SystemProperties.LockToken);
 
-                    await SendMessages(connectionString, message.NServiceBusReplyToAddress(), message.NServiceBusTransportEncoding());
+                    await SendReplyMessage(connectionString, message.NServiceBusReplyToAddress(), message.NServiceBusTransportEncoding());
                 }, 
                 new MessageHandlerOptions(exc =>
                 {
@@ -48,7 +48,7 @@ namespace NewClientNativeReceiver
             await queueClient.CloseAsync();
         }
 
-        private static async Task SendMessages(string connectionString, string replyTo, string transportEncoding)
+        private static async Task SendReplyMessage(string connectionString, string replyTo, string transportEncoding)
         {
             var client1 = new QueueClient(connectionString, "wire-compat/" + replyTo);
 
