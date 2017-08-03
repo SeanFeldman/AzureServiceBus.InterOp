@@ -22,6 +22,7 @@ namespace NewClientNativeSender
                     byteArrayFunc = msg => msg.Body;
                     break;
 
+                case "": // coming from ASB transport v6 and below
                 case "wcf/byte-array":
                     byteArrayFunc = msg => msg.GetBody<byte[]>();
                     break;
